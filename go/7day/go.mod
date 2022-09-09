@@ -1,4 +1,4 @@
-module example
+module gomain
 
 go 1.19
 
