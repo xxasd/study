@@ -9,6 +9,7 @@ package main
 // 404 NOT FOUND: /world
 
 import (
+	"gomain/automatic"
 	"net/http"
 
 	"gee"
@@ -46,6 +47,11 @@ func main() {
 
 	r.GET("/assets/*filepath", func(c *gee.Context) {
 		c.JSON(http.StatusOK, gee.H{"filepath": c.Param("filepath")})
+	})
+
+	build := r.Group("automatic")
+	build.POST("/push/frontend", func(c *gee.Context) {
+		go automatic.BuildFrentReact(c)
 	})
 
 	r.Run(":9999")
