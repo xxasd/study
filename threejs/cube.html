@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>My first three.js app</title>
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="js/three.js"></script>
+    <script>
+      // 创建一个场景
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      const renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      // 创建立方体
+      const geometry = new THREE.BoxGeometry(1, 1, 1);
+      const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+      const cube = new THREE.Mesh(geometry, material);
+      // 默认情况下，当我们调用scene.add()的时候，物体将会被添加到(0,0,0)坐标
+      scene.add(cube);
+      // 将使得摄像机和立方体彼此在一起。为了防止这种情况的发生，我们只需要将摄像机稍微向外移动一些即可。
+      camera.position.z = 5;
+
+      // 渲染场景
+      function animate() {
+        // requestAnimationFrame有很多的优点。
+        // 最重要的一点或许就是当用户切换到其它的标签页时，它会暂停
+        // 因此不会浪费用户宝贵的处理器资源，也不会损耗电池的使用寿命
+        requestAnimationFrame(animate);
+
+        // 使立方体动起来
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+
+        renderer.render(scene, camera);
+      }
+      animate();
+    </script>
+  </body>
+</html>
